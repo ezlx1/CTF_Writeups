@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="header.svg" alt="CTF Writeups: animated terminal header" width="100%">
+<img src="assets/header.svg" alt="CTF Writeups: animated terminal header" width="100%">
 
 <br>
 
