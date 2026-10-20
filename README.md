@@ -4,11 +4,11 @@
 
 <br>
 
-![Last commit](https://img.shields.io/github/last-commit/ezlx1/CTF_Writeups?style=flat-square&color=39ff14&labelColor=FFFFFF)
+![Last commit](https://img.shields.io/github/last-commit/ezlx1/CTF_Writeups?style=flat-square&color=39ff14&labelColor=0d1117)
 ![TryHackMe](https://img.shields.io/badge/TryHackMe-Top_5%25-39ff14?style=flat-square&labelColor=0d1117&logo=tryhackme&logoColor=white)
-![HackTheBox](https://img.shields.io/badge/HackTheBox-~80%25_tracks-39ff14?style=flat-square&labelColor=FFFFFF&logo=hackthebox&logoColor=white)
-![PortSwigger](https://img.shields.io/badge/PortSwigger-Web_Academy-39ff14?style=flat-square&labelColor=FFFFFF&logo=portswigger&logoColor=white)
-![pwn.college](https://img.shields.io/badge/pwn.college-binary_exploitation-39ff14?style=flat-square&labelColor=FFFFFF)
+![HackTheBox](https://img.shields.io/badge/HackTheBox-~80%25_tracks-39ff14?style=flat-square&labelColor=0d1117&logo=hackthebox&logoColor=white)
+![PortSwigger](https://img.shields.io/badge/PortSwigger-Web_Academy-39ff14?style=flat-square&labelColor=0d1117&logo=portswigger&logoColor=white)
+![pwn.college](https://img.shields.io/badge/pwn.college-binary_exploitation-39ff14?style=flat-square&labelColor=0d1117)
 ![picoCTF](https://img.shields.io/badge/picoCTF-active-39ff14?style=flat-square&labelColor=0d1117)
 
 **Notes, methodology and full exploit chains from the boxes and labs I've worked through.**
