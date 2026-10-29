@@ -1,0 +1,1 @@
+![](lab-innerhtml-sink.png)

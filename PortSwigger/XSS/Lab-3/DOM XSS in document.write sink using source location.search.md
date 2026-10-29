@@ -1,0 +1,1 @@
+![](lab-document-write-sink.png)
