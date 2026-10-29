@@ -24,7 +24,7 @@
 
 Starting with an `nmap` scan to enumerate open ports and services:
 
-![](Nmap.png)
+![](Attachments/Nmap.png)
 
 Two ports are open:
 
@@ -33,15 +33,15 @@ Two ports are open:
 
 While reviewing the `nmap` output, a `robots.txt` entry stood out, pointing to an unusual endpoint. I made a note of it and moved on to check the web app itself first.
 
-![](HomePage.png)
+![](Attachments/HomePage.png)
 
 The site has three links: **Home**, **Operatives**, and **Contact**. Nothing immediately useful there, so I went back to the endpoint disclosed in `robots.txt`.
 
-![](Strange%20Endpoint.png)
+![](Attachments/Strange%20Endpoint.png)
 
 Visiting it returned an access-denied style message. Inspecting the page's cookies revealed a value that could be modified to unlock access.
 
-![](Granted.png)
+![](Attachments/Granted.png)
 
 After adjusting the cookie, the page revealed an encoded string:
 
@@ -73,7 +73,7 @@ password = position('hEzAdCfHzAhAiJzAeIaDjBcBhHgAzAfHfN')
 print(f"{username} :: {password}")
 ```
 
-![](username&password.png)
+![](Attachments/username&password.png)
 
 This decoded cleanly into a valid username and password pair.
 
@@ -81,28 +81,28 @@ This decoded cleanly into a valid username and password pair.
 
 With working credentials in hand, I logged in over SSH:
 
-![](InitialAccess.png)
+![](Attachments/InitialAccess.png)
 
 This gave access to the first flag:
 
-![](FirstFlag.png)
+![](Attachments/FirstFlag.png)
 
 ## Exploiting the SUID Binary
 
 Inside the home directory sat a SUID binary clearly meant to be reverse engineered and exploited.
 
-![](TestingBinary.png)
+![](Attachments/TestingBinary.png)
 
 Fuzzing it with a long string of `A`s produced a segmentation fault, confirming an unbounded write — consistent with the binary's use of `gets()`. Further testing pinned the overflow offset to the saved return address at **72 bytes**.
 
 Loading the binary into `gdb`, two functions stood out: `main` and `call_bash`. Disassembling both showed that `call_bash` drops privileges to a fixed UID via `setuid()` and then calls `system()` — in other words, a built-in backdoor function the challenge wants you to jump to.
 
-![](1gdb.png)
-![](disasFunctions.png)
+![](Attachments/1gdb.png)
+![](Attachments/disasFunctions.png)
 
 To confirm the crash point and the exact state of the stack at the moment of the overflow, I set two breakpoints — one at `gets@plt` and one immediately after it — and stepped through execution:
 
-![](2gdb.png)
+![](Attachments/2gdb.png)
 
 With the offset (72 bytes) and the address of `call_bash` confirmed, I built a payload that overflows the buffer, overwrites the saved return address, and redirects execution straight into `call_bash` instead of back into `main`:
 
@@ -112,7 +112,7 @@ With the offset (72 bytes) and the address of `call_bash` confirmed, I built a p
 
 The trailing `cat` keeps stdin open after the payload is delivered, so the shell spawned by `call_bash` stays interactive instead of dying immediately on EOF.
 
-![](BufferOverFlow.png)
+![](Attachments/BufferOverFlow.png)
 
 This landed a shell as the `spooky` user.
 
@@ -168,7 +168,7 @@ After waiting for the next cron tick (up to 60 seconds), I confirmed the change 
 sudo bash
 ```
 
-![](Root.png)
+![](Attachments/Root.png)
 
 From there, reading the final root-owned flag was trivial.
 
