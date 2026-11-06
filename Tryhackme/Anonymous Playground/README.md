@@ -168,7 +168,7 @@ After waiting for the next cron tick (up to 60 seconds), I confirmed the change 
 sudo bash
 ```
 
-![](Attachments/Root.png)
+![](Tryhackme/Anonymous%20Playground/Attachments/Root.png)
 
 From there, reading the final root-owned flag was trivial.
 
