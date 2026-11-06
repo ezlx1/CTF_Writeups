@@ -1,1 +1,0 @@
-![](lab-jquery-href-attribute-sink.png)

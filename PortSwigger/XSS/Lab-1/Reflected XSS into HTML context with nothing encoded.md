@@ -1,1 +1,0 @@
-![](lab-html-context-nothing-encoded.png)
