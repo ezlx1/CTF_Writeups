@@ -89,7 +89,7 @@ Logging in anonymously on FTP turns up the following:
 
 Running `ls -la` shows three directories. One of them, `.-`, looks unusual. Navigating into it with `cd` reveals another oddly named directory, `...`, which contains a file called `you_are_determined.txt`:
 
-![](FTP_Hint.png)
+![](Attachments/FTP_Hint.png)
 
 Inside is a YouTube link and a hint. The video itself turns out to be a troll, but the hint is worth holding onto for later.
 
@@ -97,41 +97,41 @@ Inside is a YouTube link and a hint. The video itself turns out to be a troll, b
 
 With ports 80 and 5900 still unexplored, I started with the web server.
 
-![](Home_Page.png)
+![](Attachments/Home_Page.png)
 
 Just the default Apache page — time for directory enumeration.
 
-![](Directory_Enumeration.png)
+![](Attachments/Directory_Enumeration.png)
 
 Of the three directories found, none were useful; the `admin` directory only repeated the hint already found on FTP.
 
 I was also able to log into the MySQL server as `admin` with no password, but didn't find anything of value there either.
 
-![](Mysql_Session.png)
+![](Attachments/Mysql_Session.png)
 
 After spending a while stuck, I ran another port scan and found a second HTTP service on port 8890.
 
-![](Home_Page2.png)
+![](Attachments/Home_Page2.png)
 
 Another default landing page, so I ran directory enumeration again.
 
-![](Tryhackme/Plotted_EMR/Attachments/Directory_Enum2.png)
+![](Attachments/Directory_Enum2.png)
 
 Two directories stand out: `/portal` and `/80`. The `/80` path just redirects back to the first web app, so `/portal` is the one worth investigating.
 
-![](Login%20Page.png)
+![](Attachments/Login%20Page.png)
 
 Running `feroxbuster` against it turns up a number of interesting pages.
 
-![](OpenEMR_Dir_Enum.png)
+![](Attachments/OpenEMR_Dir_Enum.png)
 
 The important one is `admin.php`, found after some digging.
 
-![](Admin_page.png)
+![](Attachments/Admin_page.png)
 
 Clicking **Add New Site** leads to `setup.php`, where a new site can be configured.
 
-![](Tryhackme/Plotted_EMR/Attachments/SetUp.png)
+![](Attachments/SetUp.png)
 
 Since we already have access to the MySQL server on port 5900 as `admin` with no password, the plan is to create a new OpenEMR site pointed at that database using those credentials:
 
@@ -149,20 +149,20 @@ Initial User:{Anything you want}
 Initial User Password:{Anything you want}
 ```
 
-![](Setup2.png)
+![](Attachments/Setup2.png)
 
-![](NewSite.png)
+![](Attachments/NewSite.png)
 
 From there, the new site is reachable at:
 `http://10.112.140.193:8890/portal/interface/login/login.php?site=whatever you named your new site`
 
-![](OpenEmr_Access.png)
+![](Attachments/OpenEmr_Access.png)
 
 ## Initial Access
 
 While researching OpenEMR exploits, I found this GitHub repo: `https://github.com/CyberQuestor-infosec/CVE-2018-17179-OpenEMR`, which allows remote command execution.
 
-![](POC01.png)
+![](Attachments/POC01.png)
 
 One line in the PoC needed to be adjusted to match our site name:
 
@@ -170,9 +170,9 @@ One line in the PoC needed to be adjusted to match our site name:
 r = s.post(args.host + "/interface/main/main_screen.php?auth=login&site=(newone2) < -----------change this", data=login)
 ```
 
-![](POC02.png)
+![](Attachments/POC02.png)
 
-![](Initial_Access.png)
+![](Attachments/Initial_Access.png)
 
 With that, we land a shell on the machine as `www-data`.
 
@@ -180,7 +180,7 @@ With that, we land a shell on the machine as `www-data`.
 
 Next step is escalating privileges. After some digging, I found a path to the `plot_admin` account via a cron job.
 
-![](Crontab.png)
+![](Attachments/Crontab.png)
 
 A scheduled task runs every minute and uses `rsync` to back up everything in the `config` directory — which is exploitable. Normally the backup command looks like this:
 
@@ -194,7 +194,7 @@ But `rsync` can be abused to execute a script instead, by passing the `-e` flag:
 rsync -t -e sh shell.sh plot_admin@127.0.0.01:~/backup
 ```
 
-![](plot_admin.png)
+![](Attachments/plot_admin.png)
 
 For root, running `linpeas` revealed a `perl` capability, which GTFOBins confirms is exploitable:
 
@@ -208,8 +208,8 @@ or, alternatively:
 /usr/bin/perl -e 'chmod 7777, "/bin/bash"'
 ```
 
-![](Tryhackme/Plotted_EMR/Attachments/Root.png)
+![](Attachments/Root.png)
 
-![](Root_Flag.png)
+![](Attachments/Root_Flag.png)
 
 And that's root — flag captured.
