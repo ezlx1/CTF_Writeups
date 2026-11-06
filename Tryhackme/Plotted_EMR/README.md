@@ -85,7 +85,7 @@ The scan reveals four open ports. The first thing that stands out is that **anon
 
 Logging in anonymously on FTP turns up the following:
 
-![](FTPLogin.png)
+![](Attachments/FTPLogin.png)
 
 Running `ls -la` shows three directories. One of them, `.-`, looks unusual. Navigating into it with `cd` reveals another oddly named directory, `...`, which contains a file called `you_are_determined.txt`:
 
