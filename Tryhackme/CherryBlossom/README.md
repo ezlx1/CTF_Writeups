@@ -7,7 +7,7 @@
 
 I started with a simple `nmap` scan to see which ports were open.
 
-![](Attachments/NmapScan.png)
+![](Tryhackme/CherryBlossom/Attachments/NmapScan.png)
 
 Only three ports are open: `22` for SSH, and `139`/`445` for SMB. I checked for additional ports, but found none.
 

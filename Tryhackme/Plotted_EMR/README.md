@@ -208,7 +208,7 @@ or, alternatively:
 /usr/bin/perl -e 'chmod 7777, "/bin/bash"'
 ```
 
-![](Attachments/Root.png)
+![](Tryhackme/Plotted_EMR/Attachments/Root.png)
 
 ![](Attachments/Root_Flag.png)
 
