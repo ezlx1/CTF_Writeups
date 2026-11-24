@@ -33,7 +33,7 @@ Two ports are open:
 
 While reviewing the `nmap` output, a `robots.txt` entry stood out, pointing to an unusual endpoint. I made a note of it and moved on to check the web app itself first.
 
-![](Attachments/HomePage.png)
+![](Tryhackme/Anonymous%20Playground/Attachments/HomePage.png)
 
 The site has three links: **Home**, **Operatives**, and **Contact**. Nothing immediately useful there, so I went back to the endpoint disclosed in `robots.txt`.
 
@@ -81,7 +81,7 @@ This decoded cleanly into a valid username and password pair.
 
 With working credentials in hand, I logged in over SSH:
 
-![](Attachments/InitialAccess.png)
+![](Tryhackme/Anonymous%20Playground/Attachments/InitialAccess.png)
 
 This gave access to the first flag:
 

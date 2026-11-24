@@ -125,7 +125,7 @@ Then I ran `john` against the combined file using the `cherry-blossom` wordlist:
 
 This cracked the hashes and got me the user flag:
 
-![](Attachments/userFlag.png)
+![](Tryhackme/CherryBlossom/Attachments/userFlag.png)
 
 ### Root
 

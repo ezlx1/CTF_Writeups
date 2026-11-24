@@ -24,7 +24,7 @@ I started with `rustscan` for a fast initial port sweep, then followed up with `
 
 ![](Attachments/RustScan.png)
 
-![](Attachments/NmapScan.png)
+![](Tryhackme/Motunui/Attachments/NmapScan.png)
 
 ### Open Ports
 
@@ -152,7 +152,7 @@ Still no luck — so I tried a different reverse shell payload entirely:
 
 ![](Attachments/ReverseShell3.png)
 
-![](Attachments/InitialAccess.png)
+![](Tryhackme/Anonymous%20Playground/Attachments/InitialAccess.png)
 
 This worked — I landed a shell as `www-data` on the box.
 
@@ -225,7 +225,7 @@ To decrypt the captured HTTPS traffic using the recovered key log:
 4. Expand **Protocols** and scroll down to **TLS**.
 5. Set the **(Pre)-Master-Secret log filename** field to the downloaded `ssl.txt`.
 
-![](Attachments/Root.png)
+![](Tryhackme/Motunui/Attachments/ROOT.png)
 
 As soon as the key log was applied, previously encrypted `Application Data` packets resolved into readable **HTTP** traffic:
 
