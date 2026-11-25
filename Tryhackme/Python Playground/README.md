@@ -6,7 +6,7 @@ tags:
   - writeup
 banner_y: 0.5
 ---
-![Banner](Tryhackme/Python%20Playground/Attachments/Banner.png)
+![Banner](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/Banner.png)
 
 **Tags:** `linux` `tryhackme` `writeup`
 
@@ -39,7 +39,7 @@ Starting with an `nmap` scan to check what ports are open.
 sudo nmap -A -O -sC -sV 10.114.146.86 > nmap.scan
 ```
 
-![](Tryhackme/Python%20Playground/Attachments/NmapScan.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/NmapScan.png)
 
 **Open ports:**
 
@@ -58,23 +58,23 @@ Since only port `80` is open on the web side, I started by enumerating the web a
 
 Visiting the website, at first glance there's not much to interact with — just `Login` and `Sign up` buttons. Trying to sign up returns a message saying only admins can access the site.
 
-![](Tryhackme/Python%20Playground/Attachments/HomePage.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/HomePage.png)
 
 Running directory fuzzing turned up an interesting page: `admin.html`.
 
-![](Tryhackme/Python%20Playground/Attachments/gobuster.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/gobuster.png)
 
 Visiting the page shows a login form for the user `connor`.
 
-![](Tryhackme/Python%20Playground/Attachments/AdminLogin.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/AdminLogin.png)
 
 Checking the page source revealed something interesting.
 
-![](Tryhackme/Python%20Playground/Attachments/AdminSource.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/AdminSource.png)
 
 At first I tried to recognize the hash format to crack it, but missed that the page also referenced `super-secret-admin-testing-panel.html`. Visiting that endpoint directly revealed a Python compiler.
 
-![](Tryhackme/Python%20Playground/Attachments/PythonCompiler.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/PythonCompiler.png)
 
 This looked like a promising path to initial access.
 
@@ -87,7 +87,7 @@ print(result.stdout.strip())
 
 I tried running this to check which user the compiler service runs as, but couldn't — some filtering is applied to the submitted code.
 
-![](Tryhackme/Python%20Playground/Attachments/SecurityThreatDetectedMessage.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/SecurityThreatDetectedMessage.png)
 
 After some testing, I found the filter was blocking the `import` keyword specifically. Searching for a bypass, I found this approach:
 
@@ -98,7 +98,7 @@ print(user)
 
 Using the `__import__()` function instead of the `import` statement bypassed the filter, and it worked.
 
-![](Tryhackme/Python%20Playground/Attachments/ExecutingPython.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/ExecutingPython.png)
 
 The user is `root`.
 
@@ -118,7 +118,7 @@ nc -lnvp 4444
 
 After setting up the listener and running the script through the Python compiler, I got a shell as root — along with the first flag.
 
-![](Tryhackme/Python%20Playground/Attachments/InitalAccess.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/InitalAccess.png)
 
 After a bit more enumeration, as you'd expect, this turned out to be a Docker container:
 
@@ -152,7 +152,7 @@ Time to escape it.
 cat /root/root.txt
 ```
 
-![](Tryhackme/Python%20Playground/Attachments/rootFlag.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/rootFlag.png)
 
 Already root inside the container, the real goal here is escaping to the underlying host.
 
@@ -291,9 +291,9 @@ hash_value = "dxeedxebdwemdwesdxdtdweqdxefdxefdxdudueqduerdvdtdvdu"
 print(reverse_hash(hash_value))
 ```
 
-![](Tryhackme/Python%20Playground/Attachments/ConnorPassword.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/ConnorPassword.png)
 
-![](Tryhackme/Python%20Playground/Attachments/Flag2.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/Flag2.png)
 
 With `connor`'s password in hand, the next step was becoming root. While enumerating the container I'd found a shared mount at `/mnt/log`, which maps back to the real host's `/var/log`. My idea:
 
@@ -359,7 +359,7 @@ And finally, back in connor's session:
 connor@pythonplayground:/var/log/connor$ ./bash -p
 ```
 
-![](Tryhackme/Python%20Playground/Attachments/Flag3.png)
+![](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/Flag3.png)
 
 ---
 
