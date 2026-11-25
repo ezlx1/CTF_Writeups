@@ -6,15 +6,9 @@ tags:
   - writeup
 banner_y: 0.5
 ---
----
-banner: "Tryhackme/Python Playground/Attachments/Banner.png"
-tags:
-  - linux
-  - tryhackme
-  - writeup
----
+![Banner](Tryhackme/Python%20Playground/Attachments/Banner.png)
 
-
+**Tags:** `linux` `tryhackme` `writeup`
 
 # Python Playground
 
@@ -152,12 +146,13 @@ Time to escape it.
 
 ## Privilege Escalation
 
-**Flag 1:**
+**Root flag:**
 
 ```bash
-cat flag1.txt
+cat /root/root.txt
 ```
 
+![](Tryhackme/Python%20Playground/Attachments/rootFlag.png)
 
 Already root inside the container, the real goal here is escaping to the underlying host.
 
