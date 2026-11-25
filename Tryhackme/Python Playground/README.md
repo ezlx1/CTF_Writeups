@@ -1,11 +1,3 @@
----
-banner: "![[Tryhackme/Python Playground/Attachments/Banner.png]]"
-tags:
-  - linux
-  - tryhackme
-  - writeup
-banner_y: 0.5
----
 ![Banner](https://raw.githubusercontent.com/ezlx1/CTF_Writeups/main/Tryhackme/Python%20Playground/Attachments/Banner.png)
 
 **Tags:** `linux` `tryhackme` `writeup`
