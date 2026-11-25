@@ -30,7 +30,7 @@ Welcome to my writeup for the TryHackMe room **M4tr1x: Exit Denied**. This box r
 
 Starting with an `nmap` scan to see what's exposed:
 
-![](Attachments/NmapScan.png)
+![](Tryhackme/M4tr1x%20Exit%20Denied/Attachments/NmapScan.png)
 
 Three ports are open: `ssh` (22), `http` (80), and `mysql` (3306). Since I don't have credentials for `ssh` or `mysql` yet, I'll start enumerating `http`.
 
@@ -42,7 +42,7 @@ Three ports are open: `ssh` (22), `http` (80), and `mysql` (3306). Since I don't
 
 Visiting the website and reading the prompt's hint about a specific directory, I started with `gobuster` for directory enumeration.
 
-![](Attachments/HomePage.png)
+![](Tryhackme/M4tr1x%20Exit%20Denied/Attachments/HomePage.png)
 
 Directory fuzzing turned up a number of paths, but nothing that pointed directly to a "white rabbit":
 
