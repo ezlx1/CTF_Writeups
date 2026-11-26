@@ -85,7 +85,7 @@ With working credentials in hand, I logged in over SSH:
 
 This gave access to the first flag:
 
-![](Attachments/FirstFlag.png)
+![](Tryhackme/Anonymous%20Playground/Attachments/FirstFlag.png)
 
 ## Exploiting the SUID Binary
 
