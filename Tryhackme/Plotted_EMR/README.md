@@ -127,7 +127,7 @@ Running `feroxbuster` against it turns up a number of interesting pages.
 
 The important one is `admin.php`, found after some digging.
 
-![](Attachments/Admin_page.png)
+![](Tryhackme/Plotted_EMR/Attachments/Admin_page.png)
 
 Clicking **Add New Site** leads to `setup.php`, where a new site can be configured.
 

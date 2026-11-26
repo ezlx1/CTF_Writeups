@@ -179,7 +179,7 @@ The Shared Secret Token was recoverable from the `testing.zip` attachment. From 
 
 [M4tr1xBrute.py — GeardoRanger](https://github.com/GeardoRanger/M4tr1xBrute.py)
 
-![](Attachments/InitialAccess.png)
+![](Tryhackme/M4tr1x%20Exit%20Denied/Attachments/InitialAccess.png)
 
 With a valid OTP, I authenticated over SSH and grabbed the user flag:
 
@@ -234,7 +234,7 @@ find / -type f -iname "*root" -user root 2>/dev/null
 
 This surfaced an unusually-named Python script: `/etc/-- -root.py`.
 
-![](Attachments/RootFlag.png)
+![](Tryhackme/M4tr1x%20Exit%20Denied/Attachments/RootFlag.png)
 
 Running the script computed and printed the root flag.
 
