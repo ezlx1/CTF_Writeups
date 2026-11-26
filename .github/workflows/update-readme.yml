@@ -1,0 +1,44 @@
+name: Update README and TV readout
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      - "assets/header.svg"
+      - ".github/workflows/update-readme.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history, so `git log` per-file / per-repo dates work
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rebuild writeups table
+        run: python scripts/update_writeups_table.py
+
+      - name: Rebuild TV readout
+        run: python scripts/update_tv_log.py
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- README.md assets/header.svg; then
+            git add README.md assets/header.svg
+            git commit -m "chore: refresh writeups table and TV readout [skip ci]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
