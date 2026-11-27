@@ -59,11 +59,11 @@
     <rect x="356" y="96" width="256" height="180" fill="#05070a"/>
     <!-- TVLOG:START -->
     <g font-family="Consolas, 'Courier New', monospace" font-size="13" fill="#39ff14">
-      <text x="364" y="118">fix: embed shelf clips in header</text>
+      <text x="364" y="118">chore: ignore clip embed script</text>
       <text x="364" y="136">chore: refresh writeups table an</text>
-      <text x="364" y="154">fix: correct clip filename</text>
+      <text x="364" y="154">fix: embed shelf clips in header</text>
       <text x="364" y="172">chore: refresh writeups table an</text>
-      <text x="364" y="190">feat: redesign README with anima</text>
+      <text x="364" y="190">fix: correct clip filename</text>
       <text x="364" y="214" fill="#eafff0">$ git log --oneline</text>
       <rect x="524" y="203" width="8" height="14" fill="#eafff0">
         <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
