@@ -44,6 +44,7 @@ The mitigation section matters most to me — that's the defensive (SOC) side of
 <!-- WRITEUPS:START -->
 | Writeup | Platform | Difficulty | OS |
 |---|---|---|---|
+| [Lockdown](Tryhackme/Lockdown/README.md) | Tryhackme | Medium | Linux |
 | [Anonymous Playground — TryHackMe Writeup](Tryhackme/Anonymous Playground/README.md) | Tryhackme | Hard | — |
 | [TryHackMe: VulnNet](Tryhackme/VulnNet/README.md) | Tryhackme | Medium | Linux |
 | [M4tr1x: Exit Denied](Tryhackme/M4tr1x Exit Denied/README.md) | Tryhackme | Hard | — |
