@@ -1,4 +1,9 @@
 .obsidian/
-HackTheBox
-Temp
+/HackTheBox/
+/Temp/
 scripts/embed_clips.py
+
+__pycache__/
+*.pyc
+*.ovpn
+.env
