@@ -59,11 +59,11 @@
     <rect x="356" y="96" width="256" height="180" fill="#05070a"/>
     <!-- TVLOG:START -->
     <g font-family="Consolas, 'Courier New', monospace" font-size="13" fill="#39ff14">
-      <text x="364" y="118">CTF_Writeups: Rubber Stamp</text>
-      <text x="364" y="136">CTF_Writeups: Rubber Stamp</text>
-      <text x="364" y="154">CTF_Writeups: Python Playground</text>
-      <text x="364" y="172">CTF_Writeups: Python Playground</text>
-      <text x="364" y="190">CTF_Writeups: Python Playground</text>
+      <text x="364" y="118">feat: redesign README with anima</text>
+      <text x="364" y="136">feat: redesign README with anima</text>
+      <text x="364" y="154">Vulnnet:mid</text>
+      <text x="364" y="172">Rubber Stamp</text>
+      <text x="364" y="190">Python Playground</text>
       <text x="364" y="214" fill="#eafff0">$ git log --oneline</text>
       <rect x="524" y="203" width="8" height="14" fill="#eafff0">
         <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>

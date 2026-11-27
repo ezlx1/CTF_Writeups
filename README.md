@@ -42,7 +42,16 @@ The mitigation section matters most to me — that's the defensive (SOC) side of
 ## `>_` Latest Writeups
 
 <!-- WRITEUPS:START -->
-_This table is rebuilt automatically by a GitHub Action on every push — see `.github/workflows/update-readme.yml`. It will populate after the next push._
+| Writeup | Platform | Difficulty | OS |
+|---|---|---|---|
+| [Anonymous Playground — TryHackMe Writeup](Tryhackme/Anonymous Playground/README.md) | Tryhackme | Hard | — |
+| [TryHackMe: VulnNet](Tryhackme/VulnNet/README.md) | Tryhackme | Medium | Linux |
+| [M4tr1x: Exit Denied](Tryhackme/M4tr1x Exit Denied/README.md) | Tryhackme | Hard | — |
+| [Plotted-EMR — TryHackMe Writeup](Tryhackme/Plotted_EMR/README.md) | Tryhackme | — | — |
+| [README](Tryhackme/Rubber Stamp/README.md) | Tryhackme | Hard | Windows |
+| [Python Playground](Tryhackme/Python Playground/README.md) | Tryhackme | Hard | Linux |
+| [CherryBlossom — TryHackMe Writeup](Tryhackme/CherryBlossom/README.md) | Tryhackme | — | — |
+| [TryHackMe — Motunui](Tryhackme/Motunui/README.md) | Tryhackme | — | — |
 <!-- WRITEUPS:END -->
 
 ## `>_` Disclaimer
